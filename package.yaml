@@ -1,0 +1,16 @@
+name: minesweeper
+dependencies:
+  - base
+executables:
+  minesweeper:
+    source-dirs:
+      - src
+    main: Main.hs
+tests:
+  spec:
+    source-dirs:
+      - test
+      - src
+    dependencies:
+      - hspec
+    main: Spec.hs
