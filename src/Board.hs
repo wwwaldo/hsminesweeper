@@ -3,8 +3,15 @@ module Board where
 import Data.Array.IArray
 import Data.List
 
+data BoardState =
+  Unknown
+  | Bomb
+  | VisibleBomb
+  | Warning Int
+  deriving(Show, Eq)
+
 data Board =
-  Board (Array (Int, Int) Bool)
+  Board (Array (Int, Int) BoardState)
   deriving(Show)
 
 format :: Board -> String
@@ -30,11 +37,19 @@ formatRow row board@(Board array) = case row of
 
     formatter :: Int -> String
     formatter x = "|" ++ q
-      where q = if array!(row, x) == False then " " else "."
+      where q = case array!(row, x) of
+                  Unknown -> " "
+                  Bomb -> " "
+                  Warning 0 -> "."
+                  Warning n -> show n
+                  VisibleBomb -> "*"
+
 
 -- index board coordinates from 1
-makeBoard :: Int -> Int -> Board
-makeBoard rows cols = Board $ listArray ((1, 1), (rows, cols)) (repeat False)
+makeBoard :: Int -> Int -> [(Int, Int)]-> Board
+makeBoard rows cols bombLocs = Board filledArray
+  where initArray = listArray ((1, 1), (rows, cols)) (repeat Unknown)
+        filledArray = initArray // (map (flip (,) Bomb) bombLocs)
 
 openCell :: Int -> Int -> Board -> Board
-openCell row col board@(Board array) = Board $ array // [((row, col), True)]
+openCell row col board@(Board array) = Board $ array // [((row, col), Warning 0)]
