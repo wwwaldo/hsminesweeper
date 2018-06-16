@@ -43,7 +43,20 @@ spec = do
     format newBoard `shouldBe` expected
 
   it "displays bombs on a board" $ do
-    let board = makeBoard 2 2 []
+    let board = makeBoard 2 2 [(1, 1)]
+        newBoard = openCell 1 1 $ openCell 1 2 board
+        expected = unlines
+          [
+          "#####",
+          "|*|.|",
+          "-----",
+          "| | |",
+          "#####"
+          ]
+    format newBoard `shouldBe` expected
+
+  it "displays bombs on a board" $ do
+    let board = makeBoard 2 2 [(1, 1)]
         newBoard = openCell 1 1 $ openCell 1 2 board
         expected = unlines
           [

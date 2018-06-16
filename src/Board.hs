@@ -44,7 +44,6 @@ formatRow row board@(Board array) = case row of
                   Warning n -> show n
                   VisibleBomb -> "*"
 
-
 -- index board coordinates from 1
 makeBoard :: Int -> Int -> [(Int, Int)]-> Board
 makeBoard rows cols bombLocs = Board filledArray
@@ -52,4 +51,16 @@ makeBoard rows cols bombLocs = Board filledArray
         filledArray = initArray // (map (flip (,) Bomb) bombLocs)
 
 openCell :: Int -> Int -> Board -> Board
-openCell row col board@(Board array) = Board $ array // [((row, col), Warning 0)]
+openCell row col board@(Board array) = Board $ array // [((row, col), update oldState)]
+  where
+    oldState = array!(row, col)
+    update VisibleBomb = VisibleBomb
+    update (Warning n) = Warning n
+    update Bomb = VisibleBomb
+    update Unknown = Warning 0
+
+checkWin :: Board -> Bool
+checkWin (Board array) = all (\x -> x /= VisibleBomb && x /= Unknown) (elems array)
+
+checkLose :: Board -> Bool
+checkLose (Board array) = any (==VisibleBomb) (elems array)
