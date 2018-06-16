@@ -2,6 +2,8 @@ name: minesweeper
 dependencies:
   - base
   - array
+  - random
+  - extra
 executables:
   minesweeper:
     source-dirs:

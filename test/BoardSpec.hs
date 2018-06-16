@@ -35,9 +35,9 @@ spec = do
         expected = unlines
           [
           "#####",
-          "|.| |",
+          "|.|.|",
           "-----",
-          "| | |",
+          "|.|.|",
           "#####"
           ]
     format newBoard `shouldBe` expected
@@ -48,22 +48,24 @@ spec = do
         expected = unlines
           [
           "#####",
-          "|*|.|",
+          "|*|1|",
           "-----",
           "| | |",
           "#####"
           ]
     format newBoard `shouldBe` expected
 
-  it "displays bombs on a board" $ do
-    let board = makeBoard 2 2 [(1, 1)]
-        newBoard = openCell 1 1 $ openCell 1 2 board
+  it "Opens entire board when no bombs" $ do
+    let board = makeBoard 3 3 []
+        newBoard = openCell 1 1 board
         expected = unlines
           [
-          "#####",
-          "|*|.|",
-          "-----",
-          "| | |",
-          "#####"
+          "#######",
+          "|.|.|.|",
+          "-------",
+          "|.|.|.|",
+          "-------",
+          "|.|.|.|",
+          "#######"
           ]
     format newBoard `shouldBe` expected
