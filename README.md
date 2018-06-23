@@ -5,6 +5,8 @@ Yay, Haskell! This is a console-based minesweeper, with cutting-edge ASCII chara
 
 (This is a joke, sorry)
 
+![](Screenshot from 2018-06-22 22-03-02.png)
+
 # Building
 This project uses the [stack](https://docs.haskellstack.org/en/stable/README/) toolchain for Haskell. Assuming you have this installed correctly, you can build from source by running the following commands from your favourite terminal:
 
