@@ -26,15 +26,22 @@ randomBoard gen rows cols bombs =
 
 update :: Board -> IO ()
 update board = do
-  userInput <- getLine
-  let result = readMaybe userInput :: Maybe (Int, Int)
-  newboard <- case result of
-    Nothing -> do
-      putStrLn ("parse error: " ++ show userInput ++ " not a tuple")
+  flagInput <- getLine
+  locationInput <- getLine
+  let shouldAddFlag = "F" == flagInput
+      location = readMaybe locationInput :: Maybe (Int, Int)
+
+  newboard <- case (shouldAddFlag, location) of
+    (_, Nothing) -> do
+      putStrLn ("parse error: " ++ show locationInput ++ " not a tuple")
       return board
-    Just (row, col) -> do
-      let newboard = openCell row col board
-      return newboard
+    (False, Just (row, col)) ->
+      return $ openCell row col board
+    (True, Just (row, col)) ->
+      return $ case hasFlag $ getState (row, col) board of
+        Nothing -> board
+        Just True -> removeFlag row col board
+        Just False -> addFlag row col board
   putStrLn $ format newboard
   if checkWin newboard
     then putStrLn "You win"
