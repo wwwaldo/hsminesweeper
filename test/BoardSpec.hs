@@ -69,3 +69,42 @@ spec = do
           "#######"
           ]
     format newBoard `shouldBe` expected
+
+  it "Adds a flag to a cell with a bomb" $ do
+    let board = makeBoard 2 2 [(1, 1)]
+        newBoard = addFlag 1 1 board
+        expected = unlines
+          [
+          "#####",
+          "|F| |",
+          "-----",
+          "| | |",
+          "#####"
+          ]
+    format newBoard `shouldBe` expected
+
+  it "Removes a flag on a cell without a bomb" $ do
+    let board = makeBoard 2 2 []
+        newBoard = removeFlag 1 1 (addFlag 1 1 board)
+        expected = unlines
+          [
+          "#####",
+          "| | |",
+          "-----",
+          "| | |",
+          "#####"
+          ]
+    format newBoard `shouldBe` expected
+
+  it "Removes a flag on a cell without a bomb" $ do
+    let board = makeBoard 2 2 []
+        newBoard = removeFlag 1 1 (addFlag 1 1 board)
+        expected = unlines
+          [
+          "#####",
+          "| | |",
+          "-----",
+          "| | |",
+          "#####"
+          ]
+    format newBoard `shouldBe` expected
