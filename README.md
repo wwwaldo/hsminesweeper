@@ -18,4 +18,4 @@ This project uses the [stack](https://docs.haskellstack.org/en/stable/README/) t
 hsminesweeper uses 1-based (row, col) indexing.
 
 # TODO
-Add the ability to put flags on the grid.
+~~Add the ability to put flags on the grid.~~ Done!
